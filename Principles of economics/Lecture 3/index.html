@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economic Growth — Lecture 3 Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --text2: #5c5c5c;
+  --accent: #c0392b;
+  --accent2: #e74c3c;
+  --blue: #2563eb;
+  --green: #16a34a;
+  --purple: #7c3aed;
+  --gold: #b8860b;
+  --border: #e5e1db;
+  --code-bg: #f4f1ec;
+  --highlight: #fef3c7;
+  --radius: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #8e1c1c 0%, var(--accent) 50%, #d4503e 100%);
+  color: white;
+  padding: 52px 24px 58px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%; left: -20%;
+  width: 60%; height: 180%;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 26px;
+  background: var(--bg);
+  border-radius: 26px 26px 0 0;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.16);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.hero p { opacity: 0.88; font-size: 1.05rem; max-width: 580px; margin: 0 auto; }
+
+.nav-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(250,248,245,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 860px; margin: 0 auto;
+  display: flex; gap: 2px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-link {
+  padding: 13px 15px;
+  font-size: 0.84rem; font-weight: 600;
+  color: var(--text2); text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2.5px solid transparent;
+  transition: all 0.2s; cursor: pointer;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.container { max-width: 860px; margin: 0 auto; padding: 40px 24px 100px; }
+
+.section { display: none; }
+.section.active { display: block; animation: fadeUp 0.35s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header { margin-bottom: 36px; }
+.section-header .tag {
+  font-size: 0.73rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px;
+}
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 400;
+  line-height: 1.25; margin-bottom: 8px;
+}
+.section-header .desc { color: var(--text2); font-size: 1rem; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 30px; margin-bottom: 20px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover { border-color: #ccc; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 400;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.card h3 .ic {
+  font-size: 1.2rem; width: 38px; height: 38px;
+  background: #fef2f2; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.card p, .card li { color: var(--text2); line-height: 1.8; }
+.card p + p { margin-top: 10px; }
+
+.formula {
+  background: var(--code-bg);
+  border-left: 3px solid var(--accent);
+  padding: 14px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 14px 0;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.02rem; color: var(--accent);
+  overflow-x: auto;
+}
+.formula .lbl {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text2); margin-bottom: 5px;
+}
+
+.keypoint {
+  background: var(--highlight);
+  border-radius: 8px; padding: 14px 18px;
+  margin: 14px 0; font-weight: 500; font-size: 0.95rem;
+  display: flex; gap: 10px; align-items: flex-start; line-height: 1.7;
+}
+.keypoint .ki { flex-shrink: 0; font-size: 1.1rem; }
+
+.tbl { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.tbl th {
+  background: var(--code-bg); padding: 12px 14px; text-align: left;
+  font-weight: 700; font-size: 0.76rem;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text2); border-bottom: 2px solid var(--border);
+}
+.tbl td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+.tbl tr:last-child td { border-bottom: none; }
+
+.alist { list-style: none; padding: 0; margin: 10px 0; }
+.alist li { padding: 6px 0 6px 24px; position: relative; }
+.alist li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+.col-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+.col-card h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 10px; }
+.col-card p { color: var(--text2); font-size: 0.93rem; }
+
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 4px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.badge-green { background: #dcfce7; color: #166534; }
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-purple { background: #ede9fe; color: #5b21b6; }
+.badge-red { background: #fee2e2; color: #991b1b; }
+
+.theory-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px 28px; margin-bottom: 18px;
+  border-left: 4px solid; transition: box-shadow 0.2s;
+}
+.theory-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.theory-card.classical { border-left-color: var(--gold); }
+.theory-card.neoclassical { border-left-color: var(--blue); }
+.theory-card.endogenous { border-left-color: var(--purple); }
+.theory-card h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 4px; }
+.theory-card .thinker { font-size: 0.85rem; color: var(--text2); font-style: italic; margin-bottom: 12px; }
+
+.step-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.step-item { background: var(--code-bg); border-radius: 6px; padding: 8px 14px; font-size: 0.88rem; font-weight: 600; }
+.step-arrow { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
+
+.policy-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 22px 26px; margin-bottom: 14px;
+}
+.policy-card h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.policy-card p { color: var(--text2); font-size: 0.93rem; }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+.quiz-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 26px 28px; margin-bottom: 18px;
+}
+.quiz-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.quiz-q { font-size: 1.05rem; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg);
+  cursor: pointer; transition: all 0.15s; font-size: 0.95rem;
+}
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: #fef8f7; }
+.quiz-opt .letter {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem; flex-shrink: 0;
+}
+.quiz-opt.correct { border-color: var(--green); background: #f0fdf4; }
+.quiz-opt.correct .letter { background: var(--green); color: white; border-color: var(--green); }
+.quiz-opt.wrong { border-color: var(--accent2); background: #fef2f2; }
+.quiz-opt.wrong .letter { background: var(--accent2); color: white; border-color: var(--accent2); }
+.quiz-opt.disabled { cursor: default; opacity: 0.55; }
+.quiz-expl {
+  margin-top: 14px; padding: 14px 18px;
+  background: #f0f7ff; border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem; color: var(--text2); line-height: 1.6; display: none;
+}
+.quiz-expl.show { display: block; }
+.quiz-result {
+  text-align: center; padding: 40px 24px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.quiz-result .score-big { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--accent); margin-bottom: 4px; }
+.quiz-result .score-label { color: var(--text2); margin-bottom: 20px; }
+.btn {
+  display: inline-block; padding: 12px 28px; border-radius: 8px; border: none;
+  background: var(--accent); color: white;
+  font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 0.9rem;
+  cursor: pointer; transition: background 0.2s;
+}
+.btn:hover { background: var(--accent2); }
+
+@media (max-width: 640px) {
+  .card, .quiz-card { padding: 20px; }
+  .two-col { grid-template-columns: 1fr; }
+  .section-header h2 { font-size: 1.7rem; }
+  .tbl { font-size: 0.82rem; }
+  .tbl th, .tbl td { padding: 10px 8px; }
+  .nav-link { padding: 12px 10px; font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Principles of Economics 2 — Lecture 3</div>
+  <h1>Economic Growth</h1>
+  <p>Measuring growth, production functions, classical vs. neoclassical vs. endogenous theories, and policy implications</p>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-link active" onclick="go('intro')">Overview</a>
+    <a class="nav-link" onclick="go('measuring')">Measuring Growth</a>
+    <a class="nav-link" onclick="go('engines')">Engines of Growth</a>
+    <a class="nav-link" onclick="go('production')">Production Function</a>
+    <a class="nav-link" onclick="go('theories')">Growth Theories</a>
+    <a class="nav-link" onclick="go('policy')">Policy</a>
+    <a class="nav-link" onclick="go('quiz')">Quiz</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== OVERVIEW ===== -->
+<div class="section active" id="sec-intro">
+  <div class="section-header">
+    <div class="tag">Section 1 — Foundations</div>
+    <h2>What Is Economic Growth?</h2>
+    <p class="desc">The core concept and how it differs from business cycle recovery.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">📈</span> Definition</h3>
+    <p>Economic growth is a <strong>sustained increase in real GDP per person</strong> over time. At a deeper level, it represents a <em>permanent outward shift</em> of the economy's production possibilities frontier (PPF).</p>
+    <p>It reflects three things: expansion of productive capacity, improvements in efficiency, and structural transformation of the economy.</p>
+    <div class="keypoint">
+      <span class="ki">🎯</span>
+      <span>Growth is a <strong>long-run supply-side phenomenon</strong>. It concerns the evolution of potential output Y*, not short-run demand fluctuations.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🔀</span> Growth vs. Business Cycle</h3>
+    <p>Real GDP can increase for two very different reasons. Only one counts as true economic growth:</p>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Cyclical Recovery</h4>
+        <p>Economy moves back toward full employment. The output gap (Y − Y*) closes. This is <em>temporary</em> — moving from inside the PPF back to the frontier.</p>
+      </div>
+      <div class="col-card">
+        <h4>True Economic Growth</h4>
+        <p>Potential GDP (Y*) itself increases. The PPF shifts <em>outward</em>. This is <em>permanent</em> — the economy can now produce more than before.</p>
+      </div>
+    </div>
+    <div class="keypoint">
+      <span class="ki">💡</span>
+      <span><strong>Recovery</strong> restores lost output. <strong>Growth</strong> raises future income permanently. This distinction is crucial for evaluating policy.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🔄</span> What Shifts the PPF Outward?</h3>
+    <p>Four sources drive the permanent expansion of productive capacity:</p>
+    <ul class="alist">
+      <li><strong>Capital accumulation</strong> — more machines, factories, infrastructure</li>
+      <li><strong>Human capital</strong> — better education, skills, and training</li>
+      <li><strong>Technological innovation</strong> — new ways to produce more with less</li>
+      <li><strong>Institutional improvements</strong> — stronger property rights, rule of law, governance</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== MEASURING GROWTH ===== -->
+<div class="section" id="sec-measuring">
+  <div class="section-header">
+    <div class="tag">Section 2 — Measurement</div>
+    <h2>Measuring Growth</h2>
+    <p class="desc">Three methods to quantify growth, the power of compounding, and the Rule of 70.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">📏</span> Three Ways to Measure</h3>
+    <p><strong>1. Absolute Change</strong> — the simplest measure:</p>
+    <div class="formula"><span class="lbl">Absolute Change</span>ΔY = Yₜ − Yₜ₋₁</div>
+    <p>Useful for scale effects, but misleading when comparing countries of different sizes.</p>
+
+    <p><strong>2. Growth Rate</strong> — captures proportional change:</p>
+    <div class="formula"><span class="lbl">Growth Rate</span>g = (Yₜ − Yₜ₋₁) / Yₜ₋₁ × 100</div>
+    <p>This is the standard measure economists use. A 3% growth rate means the economy produced 3% more real output than the previous year.</p>
+
+    <p><strong>3. Real GDP per Person</strong> — the living standards measure:</p>
+    <div class="formula"><span class="lbl">Per Capita GDP</span>Real GDP per capita = Real GDP / Population</div>
+    <p>Living standards rise <strong>only if</strong> GDP growth exceeds population growth:</p>
+    <div class="formula"><span class="lbl">Condition for Rising Living Standards</span>g_Y > g_Population</div>
+    <div class="keypoint">
+      <span class="ki">⚠️</span>
+      <span>Per capita GDP measures <em>average</em> income — it says nothing about distribution, welfare, or sustainability.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">📐</span> The Power of Compound Growth</h3>
+    <p>Growth compounds exponentially — small differences in growth rates create <em>massive</em> long-run divergence:</p>
+    <div class="formula"><span class="lbl">Compound Growth</span>Yₜ = Y₀ × (1 + g)ᵗ</div>
+    <p><strong>Example:</strong> Two countries start with $10,000 GDP per capita. Country A grows at 1%, Country B at 3%. After 100 years: A has ~$27,000 while B has ~$192,000 — a <strong>7× gap</strong> from just 2 percentage points.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">7️⃣</span> The Rule of 70</h3>
+    <p>A quick shortcut to estimate how long it takes for GDP to double:</p>
+    <div class="formula"><span class="lbl">Rule of 70</span>Years to double = 70 / g</div>
+    <table class="tbl">
+      <tr><th>Growth Rate</th><th>Years to Double</th><th>Intuition</th></tr>
+      <tr><td><strong>1%</strong></td><td>70 years</td><td>Almost a full lifetime</td></tr>
+      <tr><td><strong>2%</strong></td><td>35 years</td><td>About one generation</td></tr>
+      <tr><td><strong>4%</strong></td><td>17.5 years</td><td>Less than two decades</td></tr>
+      <tr><td><strong>7%</strong></td><td>10 years</td><td>China-style rapid growth</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===== ENGINES OF GROWTH ===== -->
+<div class="section" id="sec-engines">
+  <div class="section-header">
+    <div class="tag">Section 3 — Sources</div>
+    <h2>Engines of Growth</h2>
+    <p class="desc">The two fundamental sources, and the four drivers of productivity.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">⚙️</span> Two Engines</h3>
+    <p>All growth ultimately decomposes into just two sources:</p>
+    <div class="formula"><span class="lbl">Output Identity</span>Y = Labor Hours × Output per Hour</div>
+    <div class="formula"><span class="lbl">In Growth Rates</span>g_Y = g_Labor + g_Productivity</div>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Engine 1: More Labor</h4>
+        <p>Population growth, higher participation, more hours. But <strong>diminishing MPL</strong> means total GDP rises while GDP per worker may fall.</p>
+        <p style="margin-top:8px"><span class="badge badge-red">Limitation</span> Population growth alone doesn't guarantee higher living standards.</p>
+      </div>
+      <div class="col-card">
+        <h4>Engine 2: Higher Productivity</h4>
+        <p>More output per hour worked. This is the <em>real</em> engine of prosperity — it drives real wages and living standards.</p>
+        <p style="margin-top:8px"><span class="badge badge-green">Key fact</span> In competitive markets: Real Wage = MPL.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">⚡</span> Labor Productivity</h3>
+    <div class="formula"><span class="lbl">Definition</span>Productivity = Real GDP / Total Labor Hours</div>
+    <p>In competitive markets, <strong>Real Wage = MPL</strong>. So productivity growth directly drives wage growth and living standards.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🚀</span> Four Drivers of Productivity</h3>
+
+    <p><strong>1. Physical Capital Accumulation</strong> <span class="badge badge-blue">Level Effect</span></p>
+    <p>Capital deepening (K/L↑) raises output per worker. However, <strong>diminishing marginal returns</strong> limit the long-run effect.</p>
+
+    <hr class="divider" style="margin:20px 0">
+
+    <p><strong>2. Human Capital Formation</strong> <span class="badge badge-green">Growth Effect</span></p>
+    <p>Education and skills increase <em>effective</em> labor. Human capital enhances adaptability, facilitates innovation, and improves institutions.</p>
+    <div class="formula"><span class="lbl">With Human Capital</span>Y = AK<sup>β</sup>(HL)<sup>α</sup>  — H = human capital per worker</div>
+
+    <hr class="divider" style="margin:20px 0">
+
+    <p><strong>3. Technological Progress (TFP)</strong> <span class="badge badge-purple">Growth Effect</span></p>
+    <p>Technology increases Total Factor Productivity (A). Knowledge is <strong>partially non-rival</strong> and generates spillovers — weakening diminishing returns.</p>
+
+    <hr class="divider" style="margin:20px 0">
+
+    <p><strong>4. Institutions</strong> <span class="badge badge-green">Growth Effect</span></p>
+    <p>Property rights, rule of law, governance — encourage investment, reduce uncertainty, support innovation. Institutional quality strongly correlates with long-run income.</p>
+  </div>
+</div>
+
+<!-- ===== PRODUCTION FUNCTION ===== -->
+<div class="section" id="sec-production">
+  <div class="section-header">
+    <div class="tag">Section 4 — Framework</div>
+    <h2>The Production Function</h2>
+    <p class="desc">Cobb-Douglas and growth accounting — the mathematical backbone.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🏭</span> Aggregate Production Function</h3>
+    <div class="formula"><span class="lbl">Cobb-Douglas</span>Y = A · L<sup>α</sup> · K<sup>β</sup></div>
+    <table class="tbl">
+      <tr><th>Symbol</th><th>Meaning</th><th>Typical Value</th></tr>
+      <tr><td><strong>Y</strong></td><td>Total output (Real GDP)</td><td>—</td></tr>
+      <tr><td><strong>A</strong></td><td>Total Factor Productivity (technology)</td><td>Residual</td></tr>
+      <tr><td><strong>L</strong></td><td>Labor input (hours worked)</td><td>—</td></tr>
+      <tr><td><strong>K</strong></td><td>Physical capital stock</td><td>—</td></tr>
+      <tr><td><strong>α</strong></td><td>Output elasticity of labor</td><td>≈ 0.67</td></tr>
+      <tr><td><strong>β</strong></td><td>Output elasticity of capital</td><td>≈ 0.33</td></tr>
+    </table>
+    <p>Usually α + β = 1 (constant returns to scale).</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">📊</span> Growth Accounting</h3>
+    <div class="formula"><span class="lbl">Growth Accounting Equation</span>g_Y = g_A + α·g_L + β·g_K</div>
+    <ul class="alist">
+      <li><strong>g_A</strong> = TFP growth (the "Solow residual")</li>
+      <li><strong>α·g_L</strong> = contribution of labor growth</li>
+      <li><strong>β·g_K</strong> = contribution of capital accumulation</li>
+    </ul>
+    <div class="keypoint">
+      <span class="ki">📌</span>
+      <span><strong>Empirical insight:</strong> In advanced economies, the largest share of growth comes from TFP — not just piling up more labor or capital. Technology is the key driver.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GROWTH THEORIES ===== -->
+<div class="section" id="sec-theories">
+  <div class="section-header">
+    <div class="tag">Section 5 — Theory</div>
+    <h2>Three Growth Theories</h2>
+    <p class="desc">Classical, Neoclassical, and Endogenous — how economists explain long-run growth.</p>
+  </div>
+
+  <div class="theory-card classical">
+    <h4>Classical Growth Theory</h4>
+    <div class="thinker">Thomas Robert Malthus (1766–1834)</div>
+    <div class="step-flow">
+      <span class="step-item">Income ↑</span><span class="step-arrow">→</span>
+      <span class="step-item">Population ↑</span><span class="step-arrow">→</span>
+      <span class="step-item">Diminishing returns</span><span class="step-arrow">→</span>
+      <span class="step-item">Income ↓</span>
+    </div>
+    <p><strong>Prediction:</strong> Long-run stagnation at subsistence. Was historically relevant before industrialization — technological progress eventually broke the Malthusian trap.</p>
+  </div>
+
+  <div class="theory-card neoclassical">
+    <h4>Neoclassical Growth Theory</h4>
+    <div class="thinker">Robert Solow (1956)</div>
+    <div class="step-flow">
+      <span class="step-item">Savings</span><span class="step-arrow">→</span>
+      <span class="step-item">Investment</span><span class="step-arrow">→</span>
+      <span class="step-item">Capital ↑</span><span class="step-arrow">→</span>
+      <span class="step-item">Diminishing returns</span><span class="step-arrow">→</span>
+      <span class="step-item">Steady state</span>
+    </div>
+    <p>Technology is <em>exogenous</em>. The economy converges to a <strong>steady state</strong>. Higher savings raises income <em>level</em> but <strong>not</strong> the long-run growth <em>rate</em>. Only technology keeps growth going permanently.</p>
+  </div>
+
+  <div class="theory-card endogenous">
+    <h4>Endogenous (New) Growth Theory</h4>
+    <div class="thinker">Paul Romer & Robert Lucas (1980s–1990s)</div>
+    <p>Technology is <em>endogenous</em> — produced through deliberate R&D and education. Ideas are <strong>non-rival</strong>, partially excludable, and generate <strong>spillovers</strong>. Result: growth can persist without diminishing returns, and policies can <em>permanently</em> raise growth rates.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">📋</span> Comparison Table</h3>
+    <table class="tbl">
+      <tr><th>Feature</th><th>Classical</th><th>Neoclassical</th><th>Endogenous</th></tr>
+      <tr><td><strong>Technology</strong></td><td>Not modeled</td><td>Exogenous</td><td>Endogenous</td></tr>
+      <tr><td><strong>Returns to K</strong></td><td>Diminishing</td><td>Diminishing</td><td>Constant/Increasing</td></tr>
+      <tr><td><strong>Long-run</strong></td><td>Subsistence</td><td>Steady state</td><td>Sustained growth</td></tr>
+      <tr><td><strong>Savings effect</strong></td><td>Temporary</td><td>Level only</td><td>Level + growth</td></tr>
+      <tr><td><strong>Policy role</strong></td><td>Minimal</td><td>Limited</td><td>Central</td></tr>
+      <tr><td><strong>Weakness</strong></td><td>Ignores tech</td><td>Can't explain tech</td><td>Hard to test</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===== POLICY ===== -->
+<div class="section" id="sec-policy">
+  <div class="section-header">
+    <div class="tag">Section 6 — Applications</div>
+    <h2>Policy Implications</h2>
+    <p class="desc">What can governments do? Level effects vs. growth effects.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🎯</span> Level Effects vs. Growth Effects</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Level Effect</h4>
+        <p>One-time upward shift in income. GDP jumps higher but then grows at the same rate. Example: increasing savings.</p>
+      </div>
+      <div class="col-card">
+        <h4>Growth Effect</h4>
+        <p>Permanent increase in the growth <em>rate</em>. GDP grows faster indefinitely. Example: R&D subsidies.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="policy-card">
+    <h4>💰 Stimulate Savings</h4>
+    <p>Higher saving → higher capital stock → higher income <em>level</em>. Does <strong>not</strong> permanently raise growth rate (Solow). In global capital markets, domestic savings don't automatically become domestic investment.</p>
+    <p><span class="badge badge-blue">Level Effect</span></p>
+  </div>
+
+  <div class="policy-card">
+    <h4>🔬 Invest in R&D</h4>
+    <p>Innovation creates <strong>positive externalities</strong> — firms underinvest because they can't capture all spillover benefits. Public support corrects this market failure. Potential <em>permanent</em> growth effects under endogenous theory.</p>
+    <p><span class="badge badge-purple">Growth Effect</span></p>
+  </div>
+
+  <div class="policy-card">
+    <h4>🎓 Improve Education</h4>
+    <p>Builds human capital, innovation capacity, and technology adoption ability. In endogenous models, human capital accumulation directly sustains growth.</p>
+    <p><span class="badge badge-purple">Growth Effect</span></p>
+  </div>
+
+  <div class="policy-card">
+    <h4>🌍 Promote Trade</h4>
+    <p>Expands market size, drives specialization, diffuses technology, creates competitive pressure. Open economies show higher productivity growth. Trade supports knowledge spillovers.</p>
+    <p><span class="badge badge-green">Both Effects</span></p>
+  </div>
+
+  <div class="policy-card">
+    <h4>🤝 International Aid</h4>
+    <p>Evidence is <strong>mixed</strong>. Effective only with strong institutions, good governance, and credible policies. Without institutional reform, capital inflows may be wasted.</p>
+    <p><span class="badge badge-red">Conditional</span></p>
+  </div>
+
+  <div class="keypoint">
+    <span class="ki">🏆</span>
+    <span><strong>The Core Message:</strong> Long-run prosperity depends on productivity growth — driven by technology, human capital, and institutions. Small differences in growth rates create massive gaps over time (Rule of 70).</span>
+  </div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div class="section" id="sec-quiz">
+  <div class="section-header">
+    <div class="tag">Test Yourself</div>
+    <h2>Quiz — Economic Growth</h2>
+    <p class="desc">12 questions covering all sections. Click your answer for instant feedback.</p>
+  </div>
+  <div id="quizBox"></div>
+</div>
+
+</div>
+
+<script>
+function go(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  event.target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const Q = [
+  { q: "Economic growth is best defined as:",
+    o: ["Any increase in nominal GDP","A sustained increase in real GDP per person","Recovery from a recession","Rising stock market prices"],
+    c: 1, e: "Growth means a sustained increase in real (inflation-adjusted) GDP per person — a permanent expansion of productive capacity." },
+  { q: "Moving from inside the PPF to the frontier represents:",
+    o: ["Economic growth","Business cycle recovery","Technological progress","Capital deepening"],
+    c: 1, e: "Moving to the frontier = recovery (using idle resources). Growth = the frontier itself shifting outward." },
+  { q: "Using the Rule of 70, how long to double GDP at 4% growth?",
+    o: ["10 years","17.5 years","25 years","35 years"],
+    c: 1, e: "Years to double = 70/g = 70/4 = 17.5 years." },
+  { q: "In g_Y = g_A + α·g_L + β·g_K, what does g_A capture?",
+    o: ["Labor growth","Capital accumulation","Total Factor Productivity (technology)","Population growth"],
+    c: 2, e: "g_A is TFP growth — the portion of output growth not explained by more labor or capital. It captures technology and efficiency." },
+  { q: "In the Solow model, higher savings leads to:",
+    o: ["A permanently higher growth rate","A higher income LEVEL but same long-run growth rate","No change","Lower investment"],
+    c: 1, e: "More savings → more capital → higher steady-state income LEVEL. But diminishing returns mean the growth rate returns to what technology dictates." },
+  { q: "Which theory treats technology as endogenous?",
+    o: ["Classical (Malthus)","Neoclassical (Solow)","New Growth Theory (Romer/Lucas)","All of them"],
+    c: 2, e: "Romer and Lucas argued technology is produced within the economy through R&D and education — making it endogenous." },
+  { q: "Malthus predicted economies would:",
+    o: ["Grow forever","Converge to steady state","Return to subsistence after income increases","Achieve sustained growth"],
+    c: 2, e: "Malthus: Income↑ → Population↑ → Diminishing returns → Income↓ to subsistence. Tech progress eventually broke this trap." },
+  { q: "Living standards rise only when:",
+    o: ["GDP is positive","GDP growth exceeds population growth","Investment equals savings","Government increases spending"],
+    c: 1, e: "Per capita income rises only when g_Y > g_Population." },
+  { q: "In endogenous growth theory, knowledge is:",
+    o: ["Rival and excludable","Non-rival with spillovers","Completely free","Irrelevant to growth"],
+    c: 1, e: "Ideas are non-rival (shared without loss), partially excludable (patents), and generate spillovers." },
+  { q: "Which policy produces a 'level effect' rather than a 'growth effect'?",
+    o: ["R&D subsidies","Education investment","Stimulating savings","All of the above"],
+    c: 2, e: "Boosting savings raises the income LEVEL (higher steady state) but not the permanent growth rate in neoclassical theory." },
+  { q: "Y = A·Lᵅ·Kᵝ shows output depends on:",
+    o: ["Only labor and capital","Technology, labor, and capital","Government spending","Interest rates"],
+    c: 1, e: "The Cobb-Douglas function: output depends on technology (A), labor (L), and capital (K)." },
+  { q: "Why doesn't population growth alone guarantee rising living standards?",
+    o: ["Governments prevent it","Diminishing marginal product of labor","Wages always fall","Trade deficits increase"],
+    c: 1, e: "As L increases with fixed K, MPL decreases. Total GDP rises but GDP per worker may fall. Capital deepening must accompany labor growth." },
+];
+
+let score = 0;
+const done = new Set();
+const L = ['A','B','C','D'];
+
+function renderQuiz() {
+  document.getElementById('quizBox').innerHTML = Q.map((q, i) => `
+    <div class="quiz-card" id="qc${i}">
+      <div class="quiz-num">Question ${i+1} of ${Q.length}</div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-opts">
+        ${q.o.map((opt, j) => `
+          <div class="quiz-opt" id="qo${i}_${j}" onclick="ans(${i},${j})">
+            <span class="letter">${L[j]}</span><span>${opt}</span>
+          </div>`).join('')}
+      </div>
+      <div class="quiz-expl" id="qe${i}">${q.e}</div>
+    </div>`).join('') + '<div id="quizResult" style="display:none"></div>';
+}
+
+function ans(qi, oi) {
+  if (done.has(qi)) return;
+  done.add(qi);
+  const q = Q[qi];
+  document.querySelectorAll(`#qc${qi} .quiz-opt`).forEach((o, i) => {
+    o.classList.add('disabled');
+    if (i === q.c) o.classList.add('correct');
+    if (i === oi && oi !== q.c) o.classList.add('wrong');
+  });
+  if (oi === q.c) score++;
+  document.getElementById('qe' + qi).classList.add('show');
+  if (done.size === Q.length) {
+    setTimeout(() => {
+      const pct = Math.round(score / Q.length * 100);
+      const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '👍' : '📚';
+      const msg = pct >= 80 ? 'Excellent!' : pct >= 60 ? 'Good effort! Review what you missed.' : 'Keep studying — revisit the sections.';
+      const r = document.getElementById('quizResult');
+      r.style.display = 'block';
+      r.innerHTML = `<div class="quiz-result">
+        <div style="font-size:3rem;margin-bottom:8px">${emoji}</div>
+        <div class="score-big">${score}/${Q.length}</div>
+        <div class="score-label">${pct}% — ${msg}</div>
+        <button class="btn" onclick="resetQ()">Try Again</button>
+      </div>`;
+      r.scrollIntoView({ behavior: 'smooth' });
+    }, 600);
+  }
+}
+
+function resetQ() {
+  score = 0; done.clear(); renderQuiz();
+  document.getElementById('quizBox').scrollIntoView({ behavior: 'smooth' });
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
